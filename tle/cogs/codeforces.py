@@ -17,9 +17,9 @@ from tle.util import paginator
 from tle.util import cache_system2
 
 
-_GITGUD_NO_SKIP_TIME = 3 * 60 * 60
-_GITGUD_SCORE_DISTRIB = (2, 3, 5, 8, 12, 17, 23)
-_GITGUD_MAX_ABS_DELTA_VALUE = 300
+_GITGUD_NO_SKIP_TIME = 45 * 60
+_GITGUD_SCORE_DISTRIB = (2, 3, 5, 8, 12, 17, 23, 30, 40, 55)
+_GITGUD_MAX_ABS_DELTA_VALUE = 600
 
 
 class CodeforcesCogError(commands.CommandError):
@@ -77,7 +77,7 @@ class Codeforces(commands.Cog):
         solved = {sub.problem.name for sub in submissions if sub.verdict == 'OK'}
         problems = [prob for prob in cf_common.cache2.problem_cache.problems
                     if prob.name not in solved and prob.contestId in contests
-                    and abs(rating - prob.rating) <= 300]
+                    and abs(rating - prob.rating) <= _GITGUD_MAX_ABS_DELTA_VALUE]
 
         if not problems:
             raise CodeforcesCogError('Problems not found within the search parameters')
